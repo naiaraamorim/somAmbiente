@@ -5,12 +5,13 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 
+let intervalId: number;
+
 export const Pomodoro = () => {
   const [minutos, setMinutos] = useState(25);
   const [segundos, setSegundos] = useState(0);
   const [tempo, setTempo] = useState("25:00");
   const [rodando, setRodando] = useState(false);
-  let intervalId: number;
 
   useEffect(() => {
     setTempo(
@@ -33,7 +34,7 @@ export const Pomodoro = () => {
               return 0;
             } else {
               setMinutos((prevMinutos) => prevMinutos - 1);
-              return 0;
+              return 59
             }
           } else {
             console.log(prevSegundos)
@@ -46,6 +47,7 @@ export const Pomodoro = () => {
 
   const pausarTempo = () => {
     setRodando(false);
+    clearInterval(intervalId);
   };
 
   const reiniciarTempo = () => {
